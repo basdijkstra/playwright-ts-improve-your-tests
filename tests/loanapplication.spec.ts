@@ -1,45 +1,43 @@
 import { test, expect } from '@playwright/test';
+import { LoginPage } from './pages/loginPage';
+import { AccountsOverviewPage } from './pages/accountsOverviewPage';
+import { RequestLoanPage } from './pages/requestLoanPage';
 
 test('Loan application for 10000 with down payment of 1000 is denied', async ({ page }) => {
 
-  await page.goto('https://parabank.parasoft.com');
+  var loginPage = new LoginPage(page);
+  await loginPage.open();
 
   await page.getByRole('link', { name: 'Admin Page'}).click();
   await page.locator("//button[@value='INIT']").click();
   await expect(page.locator("//b[text()='Database Initialized']")).toBeVisible();
 
-  await page.locator("//input[@name='username']").fill('john');
-  await page.locator("//input[@name='password']").fill('demo');
-  await page.locator("//input[@value='Log In']").click();
+  await loginPage.loginAs('john', 'demo');
 
-  await page.getByRole('link', { name: 'Request Loan'}).click();
+  new AccountsOverviewPage(page).selectMenuItem('Request Loan');
 
-  await page.locator("//input[@id='amount']").fill('10000');
-  await page.locator("//input[@id='downPayment']").fill('1000');
-  await page.locator("//select[@id='fromAccountId']").selectOption('12345');
-  await page.locator("//input[@value='Apply Now']").click();
+  var requestLoanPage = new RequestLoanPage(page);
+  await requestLoanPage.submitLoanRequest('10000', '1000', '12345')
 
-  await expect(page.locator("//td[@id='loanStatus']")).toHaveText('Denied');
+  await requestLoanPage.resultShouldBe('Denied');
+  
 });
 
 test('Loan application for 1000 with down payment of 500 is approved', async ({ page }) => {
 
-  await page.goto('https://parabank.parasoft.com');
+  var loginPage = new LoginPage(page);
+  await loginPage.open();
 
   await page.getByRole('link', { name: 'Admin Page'}).click();
   await page.locator("//button[@value='INIT']").click();
   await expect(page.locator("//b[text()='Database Initialized']")).toBeVisible();
 
-  await page.locator("//input[@name='username']").fill('john');
-  await page.locator("//input[@name='password']").fill('demo');
-  await page.locator("//input[@value='Log In']").click();
+  await loginPage.loginAs('john', 'demo');
 
-  await page.getByRole('link', { name: 'Request Loan'}).click();
+  new AccountsOverviewPage(page).selectMenuItem('Request Loan');
 
-  await page.locator("//input[@id='amount']").fill('1000');
-  await page.locator("//input[@id='downPayment']").fill('500');
-  await page.locator("//select[@id='fromAccountId']").selectOption('12345');
-  await page.locator("//input[@value='Apply Now']").click();
+  var requestLoanPage = new RequestLoanPage(page);
+  await requestLoanPage.submitLoanRequest('1000', '500', '12345')
 
-  await expect(page.locator("//td[@id='loanStatus']")).toHaveText('Approved');
+  await requestLoanPage.resultShouldBe('Approved');
 });
