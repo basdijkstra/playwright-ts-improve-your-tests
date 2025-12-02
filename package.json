@@ -1,5 +1,5 @@
 {
-  "name": "playwright-ts-sopra-steria",
+  "name": "playwright-ts-improve-your-tests",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {},
@@ -8,7 +8,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@playwright/test": "^1.55.0",
+    "@playwright/test": "^1.57.0",
     "@types/node": "^24.5.0"
   }
 }
