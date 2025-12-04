@@ -1,14 +1,9 @@
 import { Page } from "@playwright/test";
+import { BasePage } from "./basePage";
 
-export class AccountsOverviewPage {
-
-    private readonly page: Page;
+export class AccountsOverviewPage extends BasePage {
 
     constructor(page: Page) {
-        this.page = page;
-    }
-
-    async selectMenuItem(menuitem: string) {
-        await this.page.getByRole('link', { name: menuitem }).click();
+        super(page);
     }
 }
