@@ -2,7 +2,9 @@
   "name": "playwright-ts-improve-your-tests",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "usingCustomBrowser": "npx playwright test ./tests/examples/usingCustomBrowser.spec.ts"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
