@@ -10,8 +10,8 @@ test('Loan application for 10000 with down payment of 1000 is denied', async ({ 
 
   /**
    * TODO: Replace this code with code that uses the LoginPage object.
-   * This class has already been defined. First, call the Open() method,
-   * then the LoginAs() method, passing in the credentials required to successfully log in.
+   * This class has already been defined. First, call the open() method,
+   * then the loginAs() method, passing in the credentials required to successfully log in.
    */
   await page.locator('input[name=username]').fill('john');
   await page.locator('input[name=password]').fill('demo');
