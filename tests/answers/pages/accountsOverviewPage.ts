@@ -8,6 +8,10 @@ export class AccountsOverviewPage {
         this.page = page;
     }
 
+    /**
+     * TODO: Implement a selectMenuItem() method to navigate to a menu item
+     * that is passed in as a string argument to the method.
+     */
     async selectMenuItem(menuitem: string) {
         await this.page.getByRole('link', { name: menuitem }).click();
     }

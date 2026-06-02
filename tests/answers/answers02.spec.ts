@@ -22,8 +22,8 @@ test('Loan application for 10000 with down payment of 1000 is denied', async ({ 
 
   /**
    * TODO: Replace this code with code that uses the AccountsOverviewPage object.
-   * This class has already been defined. Call the selectMenuItem() method to
-   * navigate to the 'Request Loan' page.
+   * This class has already been defined. Implement and then call a selectMenuItem()
+   * method to navigate to the 'Request Loan' page.
    */
   await new AccountsOverviewPage(page).selectMenuItem('Request Loan');
 
