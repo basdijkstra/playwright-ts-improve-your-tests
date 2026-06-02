@@ -4,7 +4,7 @@ test('Loan application for 10000 with down payment of 1000 is denied', async ({ 
 
   await page.goto('/');
 
-  await page.getByRole('link', { name: 'Admin Page'}).click();
+  await page.locator("//a[text()='Admin Page']").click();
   await page.locator("//button[@value='INIT']").click();
   await expect(page.locator("//b[text()='Database Initialized']")).toBeVisible();
 
@@ -12,7 +12,7 @@ test('Loan application for 10000 with down payment of 1000 is denied', async ({ 
   await page.locator("//input[@name='password']").fill('demo');
   await page.locator("//input[@value='Log In']").click();
 
-  await page.getByRole('link', { name: 'Request Loan'}).click();
+  await page.locator("//a[text()='Request Loan']").click();
 
   await page.locator("//input[@id='amount']").fill('10000');
   await page.locator("//input[@id='downPayment']").fill('1000');
@@ -26,7 +26,7 @@ test('Loan application for 1000 with down payment of 500 is approved', async ({ 
 
   await page.goto('/');
 
-  await page.getByRole('link', { name: 'Admin Page'}).click();
+  await page.locator("//a[text()='Admin Page']").click();
   await page.locator("//button[@value='INIT']").click();
   await expect(page.locator("//b[text()='Database Initialized']")).toBeVisible();
 
@@ -34,7 +34,7 @@ test('Loan application for 1000 with down payment of 500 is approved', async ({ 
   await page.locator("//input[@name='password']").fill('demo');
   await page.locator("//input[@value='Log In']").click();
 
-  await page.getByRole('link', { name: 'Request Loan'}).click();
+  await page.locator("//a[text()='Request Loan']").click();
 
   await page.locator("//input[@id='amount']").fill('1000');
   await page.locator("//input[@id='downPayment']").fill('500');
@@ -48,7 +48,7 @@ test('Loan application for 100 with down payment of 10 is approved', async ({ pa
 
   await page.goto('/');
 
-  await page.getByRole('link', { name: 'Admin Page'}).click();
+  await page.locator("//a[text()='Admin Page']").click();
   await page.locator("//button[@value='INIT']").click();
   await expect(page.locator("//b[text()='Database Initialized']")).toBeVisible();
 
@@ -56,7 +56,7 @@ test('Loan application for 100 with down payment of 10 is approved', async ({ pa
   await page.locator("//input[@name='password']").fill('demo');
   await page.locator("//input[@value='Log In']").click();
 
-  await page.getByRole('link', { name: 'Request Loan'}).click();
+  await page.locator("//a[text()='Request Loan']").click();
 
   await page.locator("//input[@id='amount']").fill('100');
   await page.locator("//input[@id='downPayment']").fill('10');
