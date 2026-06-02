@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "usingCustomBrowser": "npx playwright test ./tests/examples/usingCustomBrowser.spec.ts"
+    "exercises01": "npx playwright test tests/exercises/exercises01.spec.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@playwright/test": "^1.57.0",
+    "@playwright/test": "^1.60.0",
     "@types/node": "^24.5.0"
   }
 }
