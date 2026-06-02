@@ -31,7 +31,10 @@ export default defineConfig({
     baseURL: 'https://parabank.parasoft.com',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry'
+    trace: 'on-first-retry',
+
+    /* The attribute to look for when finding elements using getByTestId() */
+    testIdAttribute: 'id'
   },
 
   /* Configure projects for major browsers */

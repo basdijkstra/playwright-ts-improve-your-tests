@@ -3,7 +3,7 @@ import { Page } from "@playwright/test";
 export class LoginPage {
 
     private readonly page: Page;
-    private readonly url: string = 'https://parabank.parasoft.com';
+    private readonly url: string = '/';
 
     constructor(page: Page) {
         this.page = page;

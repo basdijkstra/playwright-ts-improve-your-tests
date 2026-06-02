@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "exercises01": "npx playwright test tests/exercises/exercises01.spec.ts"
+    "exercises01": "npx playwright test tests/exercises/exercises01.spec.ts",
+    "exercises02": "npx playwright test tests/exercises/exercises02.spec.ts"
   },
   "keywords": [],
   "author": "",
