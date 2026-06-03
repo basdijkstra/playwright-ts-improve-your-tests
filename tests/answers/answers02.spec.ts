@@ -1,15 +1,15 @@
-import { test, expect, request } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { LoginPage } from './pages/loginPage';
 import { AccountsOverviewPage } from './pages/accountsOverviewPage';
 import { RequestLoanPage } from './pages/requestLoanPage';
 
 test('Loan application for 10000 with down payment of 1000 is denied', async ({ page }) => {
 
-  await page.goto('https://parabank.parasoft.com');
+  await page.goto('/');
 
-  await page.getByRole('link', { name: 'Admin Page' }).click();
-  await page.getByRole('button', { name: 'INIT' }).click();
-  await expect(page.getByText('Database Initialized')).toBeVisible();
+  await page.locator("//a[text()='Admin Page']").click();
+  await page.locator("//button[@value='INIT']").click();
+  await expect(page.locator("//b[text()='Database Initialized']")).toBeVisible();
 
   /**
    * TODO: Replace this code with code that uses the LoginPage object.
@@ -42,11 +42,11 @@ test('Loan application for 10000 with down payment of 1000 is denied', async ({ 
 
 test('Loan application for 1000 with down payment of 500 is approved', async ({ page }) => {
 
-  await page.goto('https://parabank.parasoft.com');
+  await page.goto('/');
 
-  await page.getByRole('link', { name: 'Admin Page' }).click();
-  await page.getByRole('button', { name: 'INIT' }).click();
-  await expect(page.getByText('Database Initialized')).toBeVisible();
+  await page.locator("//a[text()='Admin Page']").click();
+  await page.locator("//button[@value='INIT']").click();
+  await expect(page.locator("//b[text()='Database Initialized']")).toBeVisible();
 
   var loginPage = new LoginPage(page);
   await loginPage.open();
@@ -62,11 +62,11 @@ test('Loan application for 1000 with down payment of 500 is approved', async ({ 
 
 test('Loan application for 100 with down payment of 10 is approved', async ({ page }) => {
 
-  await page.goto('https://parabank.parasoft.com');
+  await page.goto('/');
 
-  await page.getByRole('link', { name: 'Admin Page' }).click();
-  await page.getByRole('button', { name: 'INIT' }).click();
-  await expect(page.getByText('Database Initialized')).toBeVisible();
+  await page.locator("//a[text()='Admin Page']").click();
+  await page.locator("//button[@value='INIT']").click();
+  await expect(page.locator("//b[text()='Database Initialized']")).toBeVisible();
 
   var loginPage = new LoginPage(page);
   await loginPage.open();

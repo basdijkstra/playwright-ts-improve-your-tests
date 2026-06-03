@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "exercises01": "npx playwright test tests/exercises/exercises01.spec.ts",
-    "exercises02": "npx playwright test tests/exercises/exercises02.spec.ts"
+    "exercises02": "npx playwright test tests/exercises/exercises02.spec.ts",
+    "exercises03": "npx playwright test tests/exercises/exercises03.spec.ts"
   },
   "keywords": [],
   "author": "",
