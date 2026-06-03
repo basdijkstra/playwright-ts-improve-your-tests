@@ -1,10 +1,11 @@
-import { test as base, expect, type Page } from "@playwright/test";
+import { APIRequestContext, test as base, expect, type Page } from "@playwright/test";
 
 type Fixtures = {
     /**
      * TODO: Register your fixture here
      */
     initializedDB: Page;
+    initializedDBviaAPI: APIRequestContext;
 }
 
 export const test = base.extend<Fixtures>({

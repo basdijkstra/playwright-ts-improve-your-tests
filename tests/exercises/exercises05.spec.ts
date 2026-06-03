@@ -1,29 +1,30 @@
-import { test, expect } from '@playwright/test';
+import { expect } from '@playwright/test';
+import { test } from '../answers/fixtures/fixtures';
 import { LoginPage } from '../answers/pages/loginPage';
 import { AccountsOverviewPage } from '../answers/pages/accountsOverviewPage';
 import { RequestLoanPage } from '../answers/pages/requestLoanPage';
 
-test.beforeEach(async ({ request }) => {
-
-    const response = await request.post('https://parabank.parasoft.com/parabank/services/bank/initializeDB');
-    expect(response.status()).toBe(204);
-});
-
+/**
+ * TODO: Refactor these three tests into a single, parameterized test
+ * Which values differ from one test to the other? Pass those in as parameters
+ * These can be input values, but also expected output values
+ */
 const test_data = [
   { amount: '10000', downPayment: '1000', fromAccountId: '12345' , expectedResult: 'Denied' },
-  { amount: '5000', downPayment: '500', fromAccountId: '12345' , expectedResult: 'Approved'}
+  { amount: '5000', downPayment: '500', fromAccountId: '12345' , expectedResult: 'Approved'},
+  { amount: '100', downPayment: '10', fromAccountId: '12345' , expectedResult: 'Approved'}
 ]
 
-for (const data of test_data) {
+for (const test_case of test_data) {
 
-  test(`Loan application for ${data.amount} with down payment of ${data.downPayment} is ${data.expectedResult}`, async ({ page }) => {
+  test(`Loan application for ${test_case.amount} with down payment of ${test_case.downPayment} is ${test_case.expectedResult}`, async ({ initializedDB: page }) => {
 
     /**
      * TODO: Change the expectedResult values from 'Denied' and 'Approved' to false and true, respectively
      * 
-     * Change the injected object from page to request to make this a pure API Playwright test
+     * Add the request fixture so we can make API calls (you can inject multiple fixtures into a test)
      * 
-     * Replace the UI automation code with a POST call to https://parabank.parasoft.com/parabank/services/bank/requestLoan
+     * Replace the UI automation code with a POST call to /parabank/services/bank/requestLoan
      * 
      * Add a request header 'Accept' with value 'application/json' to ask the API to return data in JSON format
      * 
@@ -33,12 +34,12 @@ for (const data of test_data) {
      *   * downPayment = downPayment
      *   * fromAccountId = fromAccountId
      *   
-     * I haven't shown you how to add headers or query parameters to a request. Can you find out for yourself?
+     * I haven't shown you how to add query parameters to a request. Can you find out for yourself?
      * 
      * Check that the response status code is equal to HTTP 200
      * 
      * Check that the value of the 'approved' field in the response body equals the value
-     *   of the approved parameter
+     *   of the expectedResult parameter
      */
 
     var loginPage = new LoginPage(page);
@@ -47,8 +48,9 @@ for (const data of test_data) {
 
     await new AccountsOverviewPage(page).selectMenuItem('Request Loan');
 
-    await new RequestLoanPage(page).submitLoanRequestFor(data.amount, data.downPayment, data.fromAccountId);
+    var requestLoanPage = new RequestLoanPage(page);
+    await requestLoanPage.submitLoanRequestFor(test_case.amount, test_case.downPayment, test_case.fromAccountId);
 
-    await expect(page.locator('td[id=loanStatus]')).toHaveText(data.expectedResult);
+    await expect(requestLoanPage.loanApplicationResult).toHaveText(test_case.expectedResult);
   });
 }
