@@ -1,29 +1,23 @@
-import { test, expect } from '@playwright/test';
+import { expect } from '@playwright/test';
 import { LoginPage } from './pages/loginPage';
 import { AccountsOverviewPage } from './pages/accountsOverviewPage';
 import { RequestLoanPage } from './pages/requestLoanPage';
+import { test } from './fixtures/fixtures';
 
 /**
- * TODO: Replace the first four statements of the test
- * with an HTTP POST call to https://parabank.parasoft.com/parabank/services/bank/initializeDB
- * Check that the response status code is equal to 204
- * 
- * After that works, move the code that makes the API request and checks the response status code to a test.beforeEach() hook
+ * TODO: Refactor these three tests into a single, parameterized test
+ * Which values differ from one test to the other? Pass those in as parameters
+ * These can be input values, but also expected output values
  */
-test.beforeEach(async ({ request }) => {
-
-    const response = await request.post('https://parabank.parasoft.com/parabank/services/bank/initializeDB');
-    expect(response.status()).toBe(204);
-});
-
 const test_data = [
   { amount: '10000', downPayment: '1000', fromAccountId: '12345' , expectedResult: 'Denied' },
-  { amount: '5000', downPayment: '500', fromAccountId: '12345' , expectedResult: 'Approved'}
+  { amount: '5000', downPayment: '500', fromAccountId: '12345' , expectedResult: 'Approved'},
+  { amount: '100', downPayment: '10', fromAccountId: '12345' , expectedResult: 'Approved'}
 ]
 
-for (const data of test_data) {
+for (const test_case of test_data) {
 
-  test(`Loan application for ${data.amount} with down payment of ${data.downPayment} is ${data.expectedResult}`, async ({ page }) => {
+  test(`Loan application for ${test_case.amount} with down payment of ${test_case.downPayment} is ${test_case.expectedResult}`, async ({ initializedDB: page }) => {
 
     var loginPage = new LoginPage(page);
     await loginPage.open();
@@ -31,8 +25,9 @@ for (const data of test_data) {
 
     await new AccountsOverviewPage(page).selectMenuItem('Request Loan');
 
-    await new RequestLoanPage(page).submitLoanRequestFor(data.amount, data.downPayment, data.fromAccountId);
+    var requestLoanPage = new RequestLoanPage(page);
+    await requestLoanPage.submitLoanRequestFor(test_case.amount, test_case.downPayment, test_case.fromAccountId);
 
-    await expect(page.locator('td[id=loanStatus]')).toHaveText(data.expectedResult);
+    await expect(requestLoanPage.loanApplicationResult).toHaveText(test_case.expectedResult);
   });
 }

@@ -4,10 +4,18 @@ import { AccountsOverviewPage } from './pages/accountsOverviewPage';
 import { RequestLoanPage } from './pages/requestLoanPage';
 
 /**
- * TODO: Refactor these two tests into a single, parameterized test
- * Which values differ from one test to the other? Pass those in as parameters
- * These can be input values, but also expected output values
+ * TODO: Replace the first four statements of the test
+ * with an HTTP POST call to https://parabank.parasoft.com/parabank/services/bank/initializeDB
+ * Check that the response status code is equal to 204
+ * 
+ * After that works, move the code that makes the API request and checks the response status code to a test.beforeEach() hook
  */
+test.beforeEach(async ({ request }) => {
+
+    const response = await request.post('https://parabank.parasoft.com/parabank/services/bank/initializeDB');
+    expect(response.status()).toBe(204);
+});
+
 const test_data = [
   { amount: '10000', downPayment: '1000', fromAccountId: '12345' , expectedResult: 'Denied' },
   { amount: '5000', downPayment: '500', fromAccountId: '12345' , expectedResult: 'Approved'}
@@ -16,12 +24,6 @@ const test_data = [
 for (const data of test_data) {
 
   test(`Loan application for ${data.amount} with down payment of ${data.downPayment} is ${data.expectedResult}`, async ({ page }) => {
-
-    await page.goto('https://parabank.parasoft.com');
-
-    await page.getByRole('link', { name: 'Admin Page' }).click();
-    await page.getByRole('button', { name: 'INIT' }).click();
-    await expect(page.getByText('Database Initialized')).toBeVisible();
 
     var loginPage = new LoginPage(page);
     await loginPage.open();

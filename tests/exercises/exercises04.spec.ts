@@ -1,38 +1,52 @@
-import { test, expect } from '@playwright/test';
+import { expect } from '@playwright/test';
 import { LoginPage } from '../answers/pages/loginPage';
 import { AccountsOverviewPage } from '../answers/pages/accountsOverviewPage';
 import { RequestLoanPage } from '../answers/pages/requestLoanPage';
+import { test } from '../answers/fixtures/fixtures';
 
 /**
- * TODO: Replace the first four statements of the test
- * with an HTTP POST call to https://parabank.parasoft.com/parabank/services/bank/initializeDB
- * Check that the response status code is equal to 204
- * 
- * After that works, move the code that makes the API request and checks the response status code to a test.beforeEach() hook
+ * TODO: Refactor these three tests into a single, parameterized test
+ * Which values differ from one test to the other? Pass those in as parameters
+ * These can be input values, but also expected output values
  */
-const test_data = [
-  { amount: '10000', downPayment: '1000', fromAccountId: '12345' , expectedResult: 'Denied' },
-  { amount: '5000', downPayment: '500', fromAccountId: '12345' , expectedResult: 'Approved'}
-]
+test('Loan application for 10000 with down payment of 1000 is denied', async ({ initializedDB: page }) => {
 
-for (const data of test_data) {
+  var loginPage = new LoginPage(page);
+  await loginPage.open();
+  await loginPage.loginAs('john', 'demo');
 
-  test(`Loan application for ${data.amount} with down payment of ${data.downPayment} is ${data.expectedResult}`, async ({ page }) => {
+  await new AccountsOverviewPage(page).selectMenuItem('Request Loan');
 
-    await page.goto('https://parabank.parasoft.com');
+  var requestLoanPage = new RequestLoanPage(page);
+  await requestLoanPage.submitLoanRequestFor('10000', '1000', '12345');
 
-    await page.getByRole('link', { name: 'Admin Page' }).click();
-    await page.getByRole('button', { name: 'INIT' }).click();
-    await expect(page.getByText('Database Initialized')).toBeVisible();
+  await expect(requestLoanPage.loanApplicationResult).toHaveText('Denied');
+});
 
-    var loginPage = new LoginPage(page);
-    await loginPage.open();
-    await loginPage.loginAs('john', 'demo');
+test('Loan application for 1000 with down payment of 500 is approved', async ({ initializedDB: page }) => {
 
-    await new AccountsOverviewPage(page).selectMenuItem('Request Loan');
+  var loginPage = new LoginPage(page);
+  await loginPage.open();
+  await loginPage.loginAs('john', 'demo');
 
-    await new RequestLoanPage(page).submitLoanRequestFor(data.amount, data.downPayment, data.fromAccountId);
+  await new AccountsOverviewPage(page).selectMenuItem('Request Loan');
 
-    await expect(page.locator('td[id=loanStatus]')).toHaveText(data.expectedResult);
-  });
-}
+  var requestLoanPage = new RequestLoanPage(page);
+  await requestLoanPage.submitLoanRequestFor('1000', '500', '12345');
+
+  await expect(requestLoanPage.loanApplicationResult).toHaveText('Approved');
+});
+
+test('Loan application for 100 with down payment of 10 is approved', async ({ initializedDB: page }) => {
+
+  var loginPage = new LoginPage(page);
+  await loginPage.open();
+  await loginPage.loginAs('john', 'demo');
+
+  await new AccountsOverviewPage(page).selectMenuItem('Request Loan');
+
+  var requestLoanPage = new RequestLoanPage(page);
+  await requestLoanPage.submitLoanRequestFor('100', '10', '12345');
+
+  await expect(requestLoanPage.loanApplicationResult).toHaveText('Approved');
+});
