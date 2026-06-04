@@ -4,11 +4,6 @@ import { LoginPage } from '../answers/pages/loginPage';
 import { AccountsOverviewPage } from '../answers/pages/accountsOverviewPage';
 import { RequestLoanPage } from '../answers/pages/requestLoanPage';
 
-/**
- * TODO: Refactor these three tests into a single, parameterized test
- * Which values differ from one test to the other? Pass those in as parameters
- * These can be input values, but also expected output values
- */
 const test_data = [
   { amount: '10000', downPayment: '1000', fromAccountId: '12345' , expectedResult: 'Denied' },
   { amount: '5000', downPayment: '500', fromAccountId: '12345' , expectedResult: 'Approved'},

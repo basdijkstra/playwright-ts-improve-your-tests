@@ -4,10 +4,12 @@ export class RequestLoanPage {
 
     private readonly page: Page;
     readonly loanApplicationResult: Locator;
+    readonly loanProviderName: Locator;
 
     constructor(page: Page) {
         this.page = page;
         this.loanApplicationResult = this.page.getByTestId('loanStatus');
+        this.loanProviderName = this.page.getByTestId('loanProviderName');
     }
 
     async submitLoanRequestFor(amount: string, downPayment: string, fromAccountId: string) {
