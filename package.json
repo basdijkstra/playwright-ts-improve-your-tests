@@ -8,7 +8,8 @@
     "exercises03": "npx playwright test tests/exercises/exercises03.spec.ts",
     "exercises04": "npx playwright test tests/exercises/exercises04.spec.ts",
     "exercises05": "npx playwright test tests/exercises/exercises05.spec.ts",
-    "exercises06": "npx playwright test tests/exercises/exercises06.spec.ts"
+    "exercises06": "npx playwright test tests/exercises/exercises06.spec.ts",
+    "exercises07": "npx playwright test tests/exercises/exercises07.spec.ts"
   },
   "keywords": [],
   "author": "",
