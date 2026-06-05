@@ -5,7 +5,6 @@ type Fixtures = {
      * TODO: Register your fixture here
      */
     initializedDB: Page;
-    initializedDBviaAPI: APIRequestContext;
 }
 
 export const test = base.extend<Fixtures>({
